@@ -3,5 +3,5 @@ project(P1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp Token.cpp Token.h TokenIdentifier.h Scanner.cpp Scanner.h TestScanner.cpp TestScanner.h)
 add_executable(P1 ${SOURCE_FILES})
