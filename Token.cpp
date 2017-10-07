@@ -3,8 +3,8 @@
 using namespace std;
 
 Token::Token(const TOKEN_IDENTIFIER tokenIdentifier, const string value, const string lineNumber) : tokenIdentifier(tokenIdentifier),
-                                                                                                          value(value),
-                                                                                                          lineNumber(lineNumber) {
+                                                                                                    value(value),
+                                                                                                    lineNumber(lineNumber) {
 }
 
 Token::~Token() = default;
@@ -27,7 +27,7 @@ const string Token::toString() const {
     output += "Line Number: \"";
     output += getLineNumber();
     output += "\", Token Identifier: \"";
-    output += getTokenIdentifier();
+    output += TOKEN_IDENTIFIER_TO_NAME_MAP.at(getTokenIdentifier());
     output += "\", Token Value: \"";
     output += getValue();
     output += "\"";

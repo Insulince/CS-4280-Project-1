@@ -6,8 +6,8 @@
 
 class Token {
 private:
-    const TOKEN_IDENTIFIER tokenIdentifier = nullptr;
-    const std::string value = nullptr;
+    const TOKEN_IDENTIFIER tokenIdentifier;
+    const std::string value;
     const std::string lineNumber;
 public:
     Token(const TOKEN_IDENTIFIER tokenIdentifier, const std::string value, const std::string lineNumber);
