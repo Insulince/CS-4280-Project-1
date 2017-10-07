@@ -2,6 +2,8 @@
 
 using namespace std;
 
+const string trim(const string &toBeTrimmed);
+
 Token::Token(const TOKEN_IDENTIFIER tokenIdentifier, const string value, const string lineNumber) : tokenIdentifier(tokenIdentifier),
                                                                                                     value(value),
                                                                                                     lineNumber(lineNumber) {
@@ -29,7 +31,7 @@ const string Token::toString() const {
     output += "\", Token Identifier: \"";
     output += TOKEN_IDENTIFIER_TO_NAME_MAP.at(getTokenIdentifier());
     output += "\", Token Value: \"";
-    output += getValue();
+    output += trim(getValue());
     output += "\"";
 
     return output;

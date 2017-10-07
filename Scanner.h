@@ -8,7 +8,7 @@
 
 class Scanner {
 private:
-    const std::string SUPPORTED_ALPHABET = EOF + " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789=<>!:+-*/&%.(){}[],;"; //# is omitted because they are filtered out of the original source.
+    const std::string SUPPORTED_ALPHABET = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789=<>!:+-*/&%.(){}[],;"; //# is omitted because they are filtered out of the original source.
 
     const static int QUANTITY_TOKENS = 27;
 
@@ -44,7 +44,7 @@ private:
             {END_OF_FILE,                       FSA_TABLE_ROW_INDEX_END_OF_FILE},
             {IDENTIFIER,                        FSA_TABLE_ROW_INDEX_IDENTIFIER},
             {INTEGER,                           FSA_TABLE_ROW_INDEX_INTEGER},
-            {OPERATOR_ASSIGNM,                  FSA_TABLE_ROW_INDEX_OPERATOR_ASSIGN},
+            {OPERATOR_ASSIGN,                   FSA_TABLE_ROW_INDEX_OPERATOR_ASSIGN},
             {OPERATOR_LESS_THAN,                FSA_TABLE_ROW_INDEX_OPERATOR_LESS_THAN},
             {OPERATOR_LESS_THAN_OR_EQUAL_TO,    FSA_TABLE_ROW_INDEX_OPERATOR_LESS_THAN_OR_EQUAL_TO},
             {OPERATOR_GREATER_THAN,             FSA_TABLE_ROW_INDEX_OPERATOR_GREATER_THAN},
@@ -100,6 +100,7 @@ private:
     const std::map<char, int> CHARACTER_TO_FSA_TABLE_COLUMN_INDEX_MAP = {
             {EOF, FSA_TABLE_COLUMN_INDEX_END_OF_FILE},
             {' ', FSA_TABLE_COLUMN_INDEX_WHITE_SPACE},
+            {'\n', FSA_TABLE_COLUMN_INDEX_WHITE_SPACE},
             {'a', FSA_TABLE_COLUMN_INDEX_LETTER},
             {'b', FSA_TABLE_COLUMN_INDEX_LETTER},
             {'c', FSA_TABLE_COLUMN_INDEX_LETTER},
@@ -219,7 +220,7 @@ private:
     const int INTERMEDIATE_STATE_OPERATOR_LESS_THAN_OR_EQUAL_TO = 5;
     const int INTERMEDIATE_STATE_OPERATOR_GREATER_THAN = 6;
     const int INTERMEDIATE_STATE_OPERATOR_GREATER_THAN_OR_EQUAL_TO = 7;
-    const int INTERMEDIATE_STATE_ILLEGAL_OPERATOR_EXCLAMATION_POINT = 8;
+    const int INTERMEDIATE_STATE_ILLEGAL_OPERATOR_EXCLAMATION_POINT = 8; //TODO Rename?
     const int INTERMEDIATE_STATE_OPERATOR_NOT_EQUAL_TO = 9;
     const int INTERMEDIATE_STATE_OPERATOR_EQUAL_TO = 10;
     const int INTERMEDIATE_STATE_OPERATOR_COLON = 11;
@@ -275,7 +276,7 @@ private:
             {FINAL_STATE_END_OF_FILE,                               END_OF_FILE},
             {FINAL_STATE_IDENTIFIER,                                IDENTIFIER},
             {FINAL_STATE_INTEGER,                                   INTEGER},
-            {FINAL_STATE_OPERATOR_ASSIGN,                           OPERATOR_ASSIGNM},
+            {FINAL_STATE_OPERATOR_ASSIGN,                           OPERATOR_ASSIGN},
             {FINAL_STATE_OPERATOR_LESS_THAN,                        OPERATOR_LESS_THAN},
             {FINAL_STATE_OPERATOR_LESS_THAN_OR_EQUAL_TO,            OPERATOR_LESS_THAN_OR_EQUAL_TO},
             {FINAL_STATE_OPERATOR_GREATER_THAN,                     OPERATOR_GREATER_THAN},
@@ -301,12 +302,12 @@ private:
             {INTERMEDIATE_STATE_INITIAL,                            END_OF_FILE},
             {INTERMEDIATE_STATE_IDENTIFIER,                         IDENTIFIER},
             {INTERMEDIATE_STATE_INTEGER,                            INTEGER},
-            {INTERMEDIATE_STATE_OPERATOR_ASSIGN,                    OPERATOR_ASSIGNM},
+            {INTERMEDIATE_STATE_OPERATOR_ASSIGN,                    OPERATOR_ASSIGN},
             {INTERMEDIATE_STATE_OPERATOR_LESS_THAN,                 OPERATOR_LESS_THAN},
             {INTERMEDIATE_STATE_OPERATOR_LESS_THAN_OR_EQUAL_TO,     OPERATOR_LESS_THAN_OR_EQUAL_TO},
             {INTERMEDIATE_STATE_OPERATOR_GREATER_THAN,              OPERATOR_GREATER_THAN},
             {INTERMEDIATE_STATE_OPERATOR_GREATER_THAN_OR_EQUAL_TO,  OPERATOR_GREATER_THAN_OR_EQUAL_TO},
-            {INTERMEDIATE_STATE_ILLEGAL_OPERATOR_EXCLAMATION_POINT, END_OF_FILE}, //TODO
+            {INTERMEDIATE_STATE_ILLEGAL_OPERATOR_EXCLAMATION_POINT, ILLEGAL_OPERATOR_NOT}, //TODO
             {INTERMEDIATE_STATE_OPERATOR_NOT_EQUAL_TO,              OPERATOR_NOT_EQUAL_TO},
             {INTERMEDIATE_STATE_OPERATOR_EQUAL_TO,                  OPERATOR_EQUAL_TO},
             {INTERMEDIATE_STATE_OPERATOR_COLON,                     OPERATOR_COLON},
@@ -325,7 +326,7 @@ private:
             {INTERMEDIATE_STATE_DELIMITER_RIGHT_SQUARE_BRACKET,     DELIMITER_RIGHT_SQUARE_BRACKET},
             {INTERMEDIATE_STATE_DELIMITER_COMMA,                    DELIMITER_COMMA},
             {INTERMEDIATE_STATE_DELIMITER_SEMICOLON,                DELIMITER_SEMICOLON},
-            {ERROR_STATE_ILLEGAL_ISOLATED_EXCLAMATION_POINT,        END_OF_FILE} //TODO
+            {ERROR_STATE_ILLEGAL_ISOLATED_EXCLAMATION_POINT,        ILLEGAL_OPERATOR_NOT} //TODO
     };
 
     const std::map<std::string, TOKEN_IDENTIFIER> STRING_TO_KEYWORD_TOKEN_IDENTIFIER_MAP = {
@@ -344,7 +345,7 @@ private:
 public:
     Scanner();
 
-    Token *getToken(const std::string &rawData, int currentIndex);
+    Token *getNextToken(const std::string &rawData, int currentIndex, int currentLineNumber);
 };
 
 #endif //P1_SCANNER_H

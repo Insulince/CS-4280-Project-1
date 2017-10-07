@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include "Scanner.h"
+#include "util.h"
+#include "TestScanner.h"
 
 using namespace std;
 
@@ -29,6 +31,10 @@ string getRawKeyboardData();
 string getRawInputFileData(const string &inputFileName);
 
 void processData(const string &rawData, const string &fileName);
+
+const string trim(const string &toBeTrimmed);
+
+int newLinesBeforeNextToken(const string &rawData, int currentIndex);
 
 int main(int quantityCommandLineArguments, char *commandLineArguments[]) {
     int quantityCommandLineArgumentsWithoutDefaultArgument = quantityCommandLineArguments - QUANTITY_DEFAULT_ARGUMENTS;
@@ -115,21 +121,9 @@ string getRawInputFileData(const string &inputFileName) {
 }
 
 void processData(const string &rawData, const string &fileName) {
-//    cout << "Processing for file \"" << fileName << "\":\n\"\n" << rawData << "\n\"\n";
+    TestScanner *testScanner = new TestScanner();
 
-//    cout << "`\n";
-//    for (int i = 0; i < rawData.length(); i++) {
-//        cout << "\"" << rawData[i] << "\"\t" << (rawData[i] == '\n') << "\n";
-//    }
-//    cout << "`\n";
+    string tokenOutput = testScanner->preformScan(rawData);
 
-    Scanner *scanner = new Scanner();
-    int currentIndex = 0;
-    Token *currentToken;
-
-    while (currentIndex != rawData.length()) {
-        currentToken = scanner->getToken(rawData, currentIndex);
-        cout << currentToken->toString() << endl;
-        currentIndex += currentToken->getValue().length();
-    }
+    cout << tokenOutput << endl;
 }
