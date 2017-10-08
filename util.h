@@ -5,5 +5,4 @@
 
 const std::string trim(const std::string &toBeTrimmed);
 
-
 #endif //P1_UTIL_H

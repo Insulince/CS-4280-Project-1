@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include "Scanner.h"
-#include "util.h"
 #include "TestScanner.h"
 
 using namespace std;
@@ -18,23 +16,21 @@ const static int EXIT_CODE_NO_SUCH_INPUT_FILE = 2;
 const static char *KEYBOARD_MODE_OUTPUT_FILE_NAME = "out";
 const static char *IMPLICIT_INPUT_FILE_EXTENSION = ".fs17";
 
-bool noArgumentsPassed(int quantityCommandLineArgumentsWithoutDefaultArgument);
+const bool noArgumentsPassed(int quantityCommandLineArgumentsWithoutDefaultArgument);
 
-void runForKeyboardInput();
+const void runForKeyboardInput();
 
-bool oneArgumentPassed(int quantityCommandLineArgumentsWithoutDefaultArgument);
+const bool oneArgumentPassed(int quantityCommandLineArgumentsWithoutDefaultArgument);
 
-void runForFileInput(char *const *commandLineArguments);
+const void runForFileInput(char *const *commandLineArguments);
 
-string getRawKeyboardData();
+const string getRawKeyboardData();
 
-string getRawInputFileData(const string &inputFileName);
+const string getRawInputFileData(const string &inputFileName);
 
-void processData(const string &rawData, const string &fileName);
+const void processData(const string &rawData, const string &fileName);
 
 const string trim(const string &toBeTrimmed);
-
-int newLinesBeforeNextToken(const string &rawData, int currentIndex);
 
 int main(int quantityCommandLineArguments, char *commandLineArguments[]) {
     int quantityCommandLineArgumentsWithoutDefaultArgument = quantityCommandLineArguments - QUANTITY_DEFAULT_ARGUMENTS;
@@ -59,26 +55,26 @@ int main(int quantityCommandLineArguments, char *commandLineArguments[]) {
     return EXIT_CODE_SUCCESS;
 }
 
-bool noArgumentsPassed(int quantityCommandLineArgumentsWithoutDefaultArgument) {
+const bool noArgumentsPassed(int quantityCommandLineArgumentsWithoutDefaultArgument) {
     return quantityCommandLineArgumentsWithoutDefaultArgument == 0;
 }
 
-void runForKeyboardInput() {
+const void runForKeyboardInput() {
     string rawKeyboardData = getRawKeyboardData();
     processData(rawKeyboardData, KEYBOARD_MODE_OUTPUT_FILE_NAME);
 }
 
-bool oneArgumentPassed(int quantityCommandLineArgumentsWithoutDefaultArgument) {
+const bool oneArgumentPassed(int quantityCommandLineArgumentsWithoutDefaultArgument) {
     return quantityCommandLineArgumentsWithoutDefaultArgument == 1;
 }
 
-void runForFileInput(char *const *commandLineArguments) {
+const void runForFileInput(char *const *commandLineArguments) {
     string inputFileName = commandLineArguments[1];
     string rawInputFileData = getRawInputFileData(inputFileName);
     processData(rawInputFileData, inputFileName);
 }
 
-string getRawKeyboardData() {
+const string getRawKeyboardData() {
     string rawKeyboardData;
     string rawKeyboardLine;
 
@@ -95,7 +91,7 @@ string getRawKeyboardData() {
     return rawKeyboardData;
 }
 
-string getRawInputFileData(const string &inputFileName) {
+const string getRawInputFileData(const string &inputFileName) {
     ifstream inputFile(inputFileName + IMPLICIT_INPUT_FILE_EXTENSION);
 
     if (inputFile) {
@@ -120,10 +116,10 @@ string getRawInputFileData(const string &inputFileName) {
     }
 }
 
-void processData(const string &rawData, const string &fileName) {
+const void processData(const string &rawData, const string &fileName) {
     TestScanner *testScanner = new TestScanner();
 
-    string tokenOutput = testScanner->preformScan(rawData);
+    string tokenOutput = testScanner->performScan(rawData);
 
     cout << tokenOutput << endl;
 }

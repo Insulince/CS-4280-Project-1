@@ -7,16 +7,18 @@ class TestScanner {
 private:
     bool commentMode = false;
 
-    int newLinesBeforeNextToken(const std::string &rawData, int &currentIndex);
+    const int newLinesBeforeNextToken(const std::string &rawData, int &currentIndex);
 
 public:
     TestScanner();
 
-    bool isCommentMode() const;
+    ~TestScanner();
 
-    void setCommentMode(bool commentMode);
+    const bool isCommentMode() const;
 
-    std::string preformScan(const std::string &rawData);
+    void setCommentMode(const bool commentMode);
+
+    const std::string performScan(const std::string &rawData);
 };
 
 #endif //P1_TESTSCANNER_H
