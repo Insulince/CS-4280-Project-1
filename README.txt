@@ -1,0 +1,1 @@
+Assuming that a single lexical error leads to an exit of the scanner.

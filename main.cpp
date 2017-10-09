@@ -1,11 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include "TestScanner.h"
+#include "testScanner.h"
 
 using namespace std;
 
 const static char *ERROR_MESSAGE_ILLEGAL_QUANTITY_ARGUMENTS = "Invalid quantity of command line arguments encountered, pass either zero arguments for keyboard input, or one argument for file input.\n";
-const static char *ERROR_MESSAGE_NO_SUCH_FILE = "No file with the provided name exists: \"";
+const static char *ERROR_MESSAGE_NO_SUCH_FILE = "Scanner Error: No file with the provided name exists: \"";
 
 const static int QUANTITY_DEFAULT_ARGUMENTS = 1;
 
@@ -38,14 +38,14 @@ int main(int quantityCommandLineArguments, char *commandLineArguments[]) {
     if (noArgumentsPassed(quantityCommandLineArgumentsWithoutDefaultArgument)) {
         try {
             runForKeyboardInput();
-        } catch (int &exitCode) {
-            return exitCode;
+        } catch (const int &EXIT_CODE) {
+            return EXIT_CODE;
         }
     } else if (oneArgumentPassed(quantityCommandLineArgumentsWithoutDefaultArgument)) {
         try {
             runForFileInput(commandLineArguments);
-        } catch (int &exitCode) {
-            return exitCode;
+        } catch (const int &EXIT_CODE) {
+            return EXIT_CODE;
         }
     } else {
         cerr << ERROR_MESSAGE_ILLEGAL_QUANTITY_ARGUMENTS << endl;
@@ -111,7 +111,7 @@ const string getRawInputFileData(const string &inputFileName) {
 
         return rawInputFileData;
     } else {
-        cerr << ERROR_MESSAGE_NO_SUCH_FILE << inputFileName << "\"\n";
+        cerr << ERROR_MESSAGE_NO_SUCH_FILE << inputFileName << ".fs17\"\n";
         throw EXIT_CODE_NO_SUCH_INPUT_FILE;
     }
 }

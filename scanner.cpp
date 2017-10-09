@@ -1,5 +1,5 @@
 #include <map>
-#include "Scanner.h"
+#include "scanner.h"
 #include "util.h"
 
 using namespace std;
@@ -339,7 +339,7 @@ Token *Scanner::getNextToken(const std::string &rawData, int currentIndex, int c
                 state = FSA_TABLE[TOKEN_IDENTIFIER_TO_FSA_TABLE_ROW_INDEX_MAP.at(candidateToken)][CHARACTER_TO_FSA_TABLE_COLUMN_INDEX_MAP.at(nextChar)];
                 candidateToken = STATE_TO_TOKEN_IDENTIFIER_MAP.at(state);
             } catch (std::out_of_range &exception) {
-                throw string("Scanner Error: unrecognized character \"") + nextChar + "\" on line \"" + to_string(currentLineNumber) + "\".";
+                throw string("Scanner Error: Character not in alphabet, \"") + nextChar + "\", on line \"" + to_string(currentLineNumber) + "\".";
             }
         } else {
             state = FINAL_STATE_END_OF_FILE;
@@ -353,8 +353,7 @@ Token *Scanner::getNextToken(const std::string &rawData, int currentIndex, int c
                 stateIsNotFinal = false;
             }
         } else {
-            //TODO Handle error states here?
-            stateIsNotFinal = false;
+            throw string("Scanner Error: Invalid token, \"" + TOKEN_IDENTIFIER_TO_TOKEN_NAME_MAP.at(candidateToken) + "\",  on line \"" + to_string(currentLineNumber) + "\".");
         }
     }
 

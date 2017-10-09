@@ -3,7 +3,7 @@
 
 #include <string>
 #include <map>
-#include "Token.h"
+#include "token.h"
 
 extern const std::string SUPPORTED_ALPHABET;
 

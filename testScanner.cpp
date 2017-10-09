@@ -1,8 +1,10 @@
 #include <iostream>
-#include "TestScanner.h"
-#include "Scanner.h"
+#include "testScanner.h"
+#include "scanner.h"
 
 using namespace std;
+
+const static int EXIT_CODE_SCANNER_ERROR = 3;
 
 TestScanner::TestScanner() = default;
 
@@ -30,8 +32,8 @@ const std::string TestScanner::performScan(const std::string &rawData) {
             currentIndex += currentToken->getValue().length();
             currentLineNumber += newLinesBeforeNextToken(rawData, currentIndex);
         } catch (const string &scannerError) {
-            tokenOutput += scannerError + "\n";
-            break;
+            cerr << scannerError << endl;
+            throw EXIT_CODE_SCANNER_ERROR;
         }
     } while ((TOKEN_IDENTIFIER_TO_TOKEN_NAME_MAP.at(currentToken->getTokenIdentifier()) != END_OF_FILE_TOKEN_NAME));
 

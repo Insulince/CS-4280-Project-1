@@ -1,6 +1,6 @@
 #include <string>
 #include <map>
-#include "Token.h"
+#include "token.h"
 #include "util.h"
 
 using namespace std;
