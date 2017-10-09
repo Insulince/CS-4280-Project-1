@@ -79,7 +79,7 @@ const string getRawKeyboardData() {
     string rawKeyboardLine;
 
     getline(cin, rawKeyboardLine);
-    while (rawKeyboardLine != "^Z") {
+    while (!cin.eof()) {
         if (rawKeyboardData.empty()) {
             rawKeyboardData = rawKeyboardLine;
         } else {
