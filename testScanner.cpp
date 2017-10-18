@@ -43,17 +43,25 @@ const std::string TestScanner::performScan(const std::string &rawData) {
 const int TestScanner::newLinesBeforeNextToken(const string &rawData, int &currentIndex) {
     int newLinesBeforeNextToken = 0;
 
-    while (currentIndex < rawData.length() && (rawData[currentIndex] == '\n' || (isCommentMode() ? true : rawData[currentIndex] == ' ') || rawData[currentIndex] == '#')) {
-        if (rawData[currentIndex] == '\n') {
-            newLinesBeforeNextToken++;
-        }
-
+    while (currentIndex < rawData.length() && nextCharacterIsNotTokenCharacter(rawData[currentIndex])) {
         if (rawData[currentIndex] == '#') {
             setCommentMode(!isCommentMode());
+        }
+
+        if (rawData[currentIndex] == '\n') {
+            newLinesBeforeNextToken++;
         }
 
         currentIndex++;
     }
 
     return newLinesBeforeNextToken;
+}
+
+const bool TestScanner::nextCharacterIsNotTokenCharacter(const char nextChar) const {
+    if (isCommentMode()) {
+        return true;
+    } else {
+        return nextChar == ' ' || nextChar == '\n' || nextChar == '#';
+    }
 }

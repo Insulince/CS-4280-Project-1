@@ -336,7 +336,9 @@ Token *Scanner::getNextToken(const std::string &rawData, int currentIndex, int c
 
         if (nextChar && nextChar != '#') {
             try {
+                //The new state is the row corresponding to the current candidate token, and the new column is the column corresponding to the next character.
                 state = FSA_TABLE[TOKEN_IDENTIFIER_TO_FSA_TABLE_ROW_INDEX_MAP.at(candidateToken)][CHARACTER_TO_FSA_TABLE_COLUMN_INDEX_MAP.at(nextChar)];
+                //The current candidate token is the token represented by the current state.
                 candidateToken = STATE_TO_TOKEN_IDENTIFIER_MAP.at(state);
             } catch (std::out_of_range &exception) {
                 throw string("Scanner Error: Character not in alphabet, \"") + nextChar + "\", on line \"" + to_string(currentLineNumber) + "\".";
@@ -357,6 +359,7 @@ Token *Scanner::getNextToken(const std::string &rawData, int currentIndex, int c
         }
     }
 
+    //If the calculated token is an "identifier" make sure that it isn't a keyword, or proceed accordingly if it is.
     if (candidateToken == IDENTIFIER) {
         const string &trimmedValue = trim(value);
 

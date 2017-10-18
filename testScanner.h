@@ -9,6 +9,8 @@ private:
 
     const int newLinesBeforeNextToken(const std::string &rawData, int &currentIndex);
 
+    const bool nextCharacterIsNotTokenCharacter(const char nextChar) const;
+
 public:
     TestScanner();
 
